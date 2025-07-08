@@ -39,60 +39,83 @@ The goal is to help KMS:
 
 ---
 
-## Case Scenarios & Questions
+## Data Sources
 
-### Case Scenario I – Sales & Shipping
-
-1. **Which product category had the highest sales?**  
-2. **What are the Top 3 and Bottom 3 regions in terms of sales?**  
-3. **What were the total sales of appliances in Ontario?**  
-4. **Advise KMS on how to increase revenue from the bottom 10 customers**  
-5. **Which shipping method incurred the most shipping cost?**
-
-### Case Scenario II – Customer Intelligence
-
-6. **Who are the most valuable customers, and what do they typically purchase?**  
-7. **Which small business customer had the highest sales?**  
-8. **Which corporate customer placed the most orders from 2009 to 2012?**  
-9. **Which consumer customer was the most profitable?**  
-10. **Which customers returned items, and what segment do they belong to?**  
-11. **Was shipping cost aligned with order priority (e.g., Express Air vs Delivery Truck)?**
+| File | Description |
+|------|-------------|
+| `KMS Sql Case Study.csv` | Main dataset: orders, products, sales, profit, shipping |
+| `Order_Status.csv`       | Return status of each order (`Returned` or `Completed`) |
 
 ---
 
-## Tech Stack
+## Tools Used
 
-| Tool | Purpose |
-|------|---------|
-| **SQL Server (SSMS)** | Data analysis and querying |
-| **Python (Pandas, Matplotlib)** | Data cleaning, transformation, visualization |
-| **Excel** | Summary reporting and tabular insights |
-| **GitHub** | Version control and project hosting |
+- **Microsoft SQL Server (SSMS)** – Data import and querying
+- **SQL** – Analysis logic and reporting
+- **Excel / Python** – Post-analysis formatting and charts
+- **GitHub** - Version control and project hosting
 
 ---
 
-## Visualizations
+## Case Scenario I – Sales and Shipping
 
-The following charts were generated to support the analysis:
+### 1. Which product category had the highest sales?
+- **Technology** with ₦5,984,248.18
 
-- Sales by Product Category  
-- Sales by Region (Top 3 & Bottom 3)  
-- Shipping Cost by Shipping Method  
-- Heatmap: Shipping Cost vs Order Priority  
-- Return Rate by Customer Segment  
-- Segment-Level Sales and Returns  
+### 2. What are the Top 3 and Bottom 3 regions by sales?
+#### Top 3:
+- West (₦3.59M), Ontario (₦3.06M), Prarie (₦2.83M)
+#### Bottom 3:
+- Yukon (₦975k), Northwest Territories (₦800k), Nunavut (₦116k)
 
-All visualizations are stored in the `/visuals` directory or embedded in the summary report.
+### 3. What were the total sales of appliances in Ontario?
+- ₦0.00 — no recorded appliance sales in Ontario.
+
+### 4. How can KMS increase revenue from the bottom 10 customers?
+- Targeted campaigns and upsell opportunities
+- Offer bundles or discounts
+- Use loyalty programs to retain and re-engage
+
+### 5. Which shipping method incurred the most cost?
+- **Delivery Truck** — ₦51,971.94 total shipping cost
+
+---
+
+## Case Scenario II – Customer Intelligence
+
+### 6. Who are the most valuable customers, and what do they buy?
+- Top customers: **Sean Miller**, **Emily Phan**, **Chad Gaddis**
+- Mostly purchase **Technology** and **Office Supplies**
+
+### 7. Which small business customer had the highest sales?
+- **Dennis Kane** — ₦75,967.59
+
+### 8. Which corporate customer placed the most orders (2009–2012)?
+- **Roy Skaria** — 18 orders
+
+### 9. Which consumer customer was the most profitable?
+- **Emily Phan** — ₦34,005.44 in profit
+
+### 10. Which customers returned items, and what segment do they belong to?
+- Several customers across segments returned items (see return table)
+- Detected by joining `Order_Status` with `KMS_Orders` where `Status = 'Returned'`
+
+### 11. Was shipping cost aligned with order priority?
+| Order Priority | Ship Mode       | Avg Shipping Cost |
+|----------------|------------------|--------------------|
+| High           | Express Air      | High               |
+| Low            | Delivery Truck   | Lower              |
+
+Conclusion: Shipping methods mostly align with priority. However, a few anomalies could be optimized to save cost.
 
 ---
 
 ## Key Insights
 
-- **Technology** was the highest-performing product category.
-- **Express Air** had the highest shipping cost, even for low-priority orders — review logistics strategy.
-- Some **high-value customers** consistently purchase tech and office supplies — potential loyalty targets.
-- Return rates are higher among **Consumer** segment — investigate reasons.
-- **Bottom-tier customers** have potential for upselling via personalized engagement.
+- Focus sales efforts on **Technology products**
+- Use **Delivery Truck** for non-urgent shipments to reduce cost
+- Identify **inactive or low-spending customers** and re-engage them
+- Monitor **returns** by segment to address potential quality/service issues
 
 ---
 
@@ -104,15 +127,16 @@ KMS-Inventory-Analysis/
 │ ├── KMS Sql Case Study.csv
 │ └── Order_Status.csv
 │
-├── scripts/
+├── analysis/
 │ └── KMS_Inventory_Analysis.sql
 │
 ├── reports/
 │ └── KMS_Inventory_Summary_Report.xlsx
 │
 ├── visuals/
+│ └── charts/
 │ ├── sales_by_category.png
-│ ├── shipping_costs.png
-│ └── return_rate_segment.png
+│ ├── shipping_cost_vs_priority.png
+│ └── return_rate_by_segment.png
 │
 └── README.md
